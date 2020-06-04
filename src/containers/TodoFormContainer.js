@@ -1,8 +1,7 @@
 import React from 'react'
-import TodoForm from '../components/TodoForm'
 
 const TodoFormContainer = () => {
-  return <TodoForm />
+  return <div>TodoFormContainer</div>
 }
 
 export default TodoFormContainer
