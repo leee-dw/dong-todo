@@ -5,7 +5,7 @@ import TodoListContainer from '../containers/TodoListContainer'
 const TodoListPage = () => {
   return (
     <>
-      <TodoFormContainer />
+      {/* <TodoFormContainer /> */}
       <TodoListContainer />
     </>
   )

@@ -12,7 +12,7 @@ const TodoList = ({ todos }) => {
   return (
     <TodoListBlock>
       {todos.map((todo) => (
-        <p>{todo.text}</p>
+        <p key={todo.id}>{todo.value.text}</p>
       ))}
     </TodoListBlock>
   )

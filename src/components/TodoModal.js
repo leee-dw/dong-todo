@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 
 import { IoIosClose } from 'react-icons/io'
@@ -115,12 +115,19 @@ const ColorPicker = styled.input`
     border: none;
     background-color: var(--ion-color-medium);
   }
+  
 
   ${({ primary }) =>
     primary &&
     css`
       border: 1px solid var(--ion-color-primary);
 
+      &:hover {
+        background-color: var(--ion-color-primary-tint);
+      }
+      &:active {
+        background-color: var(--ion-color-primary-shade);
+      }
       &:checked {
         background-color: var(--ion-color-primary);
       }
@@ -131,6 +138,13 @@ const ColorPicker = styled.input`
     secondary &&
     css`
       border: 1px solid var(--ion-color-secondary);
+
+      &:hover {
+        background-color: var(--ion-color-secondary-tint);
+      }
+      &:active {
+        background-color: var(--ion-color-secondary-shade);
+      }
       &:checked {
         background-color: var(--ion-color-secondary);
       }
@@ -140,6 +154,13 @@ const ColorPicker = styled.input`
     tertiary &&
     css`
       border: 1px solid var(--ion-color-tertiary);
+
+      &:hover {
+        background-color: var(--ion-color-tertiary-tint);
+      }
+      &:active {
+        background-color: var(--ion-color-tertiary-shade);
+      }
       &:checked {
         background-color: var(--ion-color-tertiary);
       }
@@ -150,6 +171,12 @@ const ColorPicker = styled.input`
     css`
       border: 1px solid var(--ion-color-success);
 
+      &:hover {
+        background-color: var(--ion-color-success-tint);
+      }
+      &:active {
+        background-color: var(--ion-color-success-shade);
+      }
       &:checked {
         background-color: var(--ion-color-success);
       }
@@ -161,6 +188,12 @@ const ColorPicker = styled.input`
     css`
       border: 1px solid var(--ion-color-warning);
 
+      &:hover {
+        background-color: var(--ion-color-warning-tint);
+      }
+      &:active {
+        background-color: var(--ion-color-warning-shade);
+      }
       &:checked {
         background-color: var(--ion-color-warning);
       }
@@ -171,6 +204,12 @@ const ColorPicker = styled.input`
     css`
       border: 1px solid var(--ion-color-danger);
 
+      &:hover {
+        background-color: var(--ion-color-danger-tint);
+      }
+      &:active {
+        background-color: var(--ion-color-danger-shade);
+      }
       &:checked {
         background-color: var(--ion-color-danger);
       }
@@ -188,12 +227,14 @@ const ButtonWrapper = styled.div`
 
 const ModalButton = styled(Button)``
 
-const TodoModal = ({ isOpen, onDismiss, onSubmit }) => {
-  const [todoText, setTodoText] = useState('')
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [colorPicks, setColorPicks] = useState(null)
-
+const TodoModal = ({
+  isOpen,
+  todoText,
+  setTodoText,
+  setColorPicks,
+  onDismiss,
+  onSubmit,
+}) => {
   const inputTextRef = useRef(null)
 
   useEffect(() => {
@@ -216,6 +257,8 @@ const TodoModal = ({ isOpen, onDismiss, onSubmit }) => {
                 <InputLabel htmlFor='todo'>할 일을 입력하세요</InputLabel>
                 <TodoTextInput
                   id='todo'
+                  name='todo-text'
+                  value={todoText}
                   type='text'
                   ref={inputTextRef}
                   onChange={(e) => {
@@ -234,36 +277,54 @@ const TodoModal = ({ isOpen, onDismiss, onSubmit }) => {
                     name='color-picker'
                     type='radio'
                     value='primary'
+                    onChange={(e) => {
+                      setColorPicks(e.target.value)
+                    }}
                   />
                   <ColorPicker
                     secondary
                     name='color-picker'
                     type='radio'
                     value='secondary'
+                    onChange={(e) => {
+                      setColorPicks(e.target.value)
+                    }}
                   />
                   <ColorPicker
                     tertiary
                     name='color-picker'
                     type='radio'
                     value='tertiary'
+                    onChange={(e) => {
+                      setColorPicks(e.target.value)
+                    }}
                   />
                   <ColorPicker
                     success
                     name='color-picker'
                     type='radio'
                     value='success'
+                    onChange={(e) => {
+                      setColorPicks(e.target.value)
+                    }}
                   />
                   <ColorPicker
                     warning
                     name='color-picker'
                     type='radio'
                     value='warning'
+                    onChange={(e) => {
+                      setColorPicks(e.target.value)
+                    }}
                   />
                   <ColorPicker
                     danger
                     name='color-picker'
                     type='radio'
                     value='danger'
+                    onChange={(e) => {
+                      setColorPicks(e.target.value)
+                    }}
                   />
                 </ColorPickerWrapper>
               </InputWrapper>

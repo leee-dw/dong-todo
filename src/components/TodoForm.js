@@ -36,8 +36,10 @@ const AddIcon = styled(IoIosAdd)`
   margin: auto;
 `
 
-const TodoForm = () => {
+const TodoForm = ({ onAdd }) => {
   const [showModal, setShowModal] = useState(false)
+  const [todoText, setTodoText] = useState('')
+  const [colorPicks, setColorPicks] = useState(null)
   const today = moment().format('dddd, D MMMM')
   const onClickShowModal = () => {
     setShowModal(true)
@@ -45,15 +47,21 @@ const TodoForm = () => {
 
   const onDismiss = () => {
     setShowModal(false)
-  }
-
-  const onClickConfirm = () => {
-    setShowModal(false)
+    setTodoText('')
+    setColorPicks('')
   }
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log('onSubmit')
+
+    const value = {
+      text: todoText,
+      color: colorPicks,
+    }
+
+    onAdd(value)
+    setTodoText('')
+    setColorPicks('')
     setShowModal(false)
   }
 
@@ -74,7 +82,14 @@ const TodoForm = () => {
           <AddIcon />
         </TodoFormButton>
       </TodoFormHeader>
-      <TodoModal isOpen={showModal} onDismiss={onDismiss} onSubmit={onSubmit} />
+      <TodoModal
+        isOpen={showModal}
+        todoText={todoText}
+        setTodoText={setTodoText}
+        setColorPicks={setColorPicks}
+        onDismiss={onDismiss}
+        onSubmit={onSubmit}
+      />
     </TodoFormBlock>
   )
 }
