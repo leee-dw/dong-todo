@@ -37,7 +37,7 @@ const TodoListContainer = () => {
   const [todos, setTodos] = useRecoilState(todoListState)
   const nextId = useRef(todos[todos.length - 1].id + 1)
 
-  const onAdd = useCallback(
+  const onAddItem = useCallback(
     (value) => {
       setTodos((oldTodos) => [
         ...oldTodos,
@@ -54,7 +54,7 @@ const TodoListContainer = () => {
 
   return (
     <>
-      <TodoForm onAdd={onAdd} />
+      <TodoForm onAddItem={onAddItem} />
       <TodoList todos={todos} />
     </>
   )
