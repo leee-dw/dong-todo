@@ -36,20 +36,19 @@ const AddIcon = styled(IoIosAdd)`
   margin: auto;
 `
 
-const TodoForm = ({ onAdd }) => {
+const TodoForm = ({ onAddItem }) => {
   const [showModal, setShowModal] = useState(false)
   const [todoText, setTodoText] = useState('')
   const [colorPicks, setColorPicks] = useState(null)
+
   const today = moment().format('dddd, D MMMM')
   const onClickShowModal = () => {
     setShowModal(true)
   }
 
-  const onDismiss = () => {
-    setShowModal(false)
-    setTodoText('')
-    setColorPicks('')
-  }
+  const onDismiss = useCallback(() => {
+    resetModalForm()
+  }, [])
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -59,16 +58,23 @@ const TodoForm = ({ onAdd }) => {
       color: colorPicks,
     }
 
-    onAdd(value)
-    setTodoText('')
-    setColorPicks('')
-    setShowModal(false)
+    onAddItem(value)
+    resetModalForm()
   }
 
-  const handleKeyPress = useCallback((e) => {
-    const { keyCode } = e
-    return keyCode === 27 && onDismiss()
-  }, [])
+  const resetModalForm = () => {
+    setShowModal(false)
+    setTodoText('')
+    setColorPicks('')
+  }
+
+  const handleKeyPress = useCallback(
+    (e) => {
+      const { keyCode } = e
+      return keyCode === 27 && onDismiss()
+    },
+    [onDismiss]
+  )
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyPress)
@@ -82,6 +88,7 @@ const TodoForm = ({ onAdd }) => {
           <AddIcon />
         </TodoFormButton>
       </TodoFormHeader>
+
       <TodoModal
         isOpen={showModal}
         todoText={todoText}
