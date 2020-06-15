@@ -35,7 +35,7 @@ const todoListState = atom({
 
 const TodoListContainer = () => {
   const [todos, setTodos] = useRecoilState(todoListState)
-  const nextId = useRef(todos[todos.length - 1].id + 1)
+  const nextId = useRef(todos.length ? todos[todos.length - 1].id + 1 : 0)
 
   const onAddItem = useCallback(
     (value) => {
@@ -52,10 +52,17 @@ const TodoListContainer = () => {
     [setTodos]
   )
 
+  const onRemoveItem = useCallback(
+    (id) => {
+      setTodos(todos.filter((todo) => todo.id !== id))
+    },
+    [todos, setTodos]
+  )
+
   return (
     <>
       <TodoForm onAddItem={onAddItem} />
-      <TodoList todos={todos} />
+      <TodoList todos={todos} onRemoveItem={onRemoveItem} />
     </>
   )
 }

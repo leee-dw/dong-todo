@@ -12,7 +12,7 @@ const TodoListBlock = styled(Responsive)`
   margin-top: 2rem;
 `
 
-const TodoListItem = styled.div`
+const TodoListItemBlock = styled.div`
   padding: 1rem;
   display: flex;
   align-items: center;
@@ -38,31 +38,31 @@ const TodoText = styled.div``
 const RemoveTodoBlock = styled.div``
 const RemoveTodo = styled(MdRemoveCircleOutline)`
   font-size: 1.5rem;
+  cursor: pointer;
 `
 
-// const TodoItem = ({ todo }) => {
-//   const { isChecked, value, id } = todo
-//   return (
-//     <li>
-//       {isChecked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
-//       <p>{value.text}</p>
-//     </li>
-//   )
-// }
+const TodoListItem = ({ todo, onRemoveItem }) => {
+  const { id, value, isChecked } = todo
+  const { text, color } = value
 
-const TodoList = ({ todos }) => {
+  return (
+    <TodoListItemBlock>
+      <CheckBoxBlock>
+        {isChecked ? <CheckBox /> : <UnCheckBox />}
+        <TodoText>{text}</TodoText>
+      </CheckBoxBlock>
+      <RemoveTodoBlock>
+        <RemoveTodo onClick={() => onRemoveItem(id)} />
+      </RemoveTodoBlock>
+    </TodoListItemBlock>
+  )
+}
+
+const TodoList = ({ todos, onRemoveItem }) => {
   return (
     <TodoListBlock>
       {todos.map((todo) => (
-        <TodoListItem key={todo.id}>
-          <CheckBoxBlock>
-            {todo.isChecked ? <CheckBox /> : <UnCheckBox />}
-            <TodoText>할 일</TodoText>
-          </CheckBoxBlock>
-          <RemoveTodoBlock>
-            <RemoveTodo />
-          </RemoveTodoBlock>
-        </TodoListItem>
+        <TodoListItem key={todo.id} todo={todo} onRemoveItem={onRemoveItem} />
       ))}
     </TodoListBlock>
   )
